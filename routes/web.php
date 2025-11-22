@@ -3,11 +3,11 @@
 use Illuminate\Support\Facades\Route;
 
 // Users Controllers
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\PengajuanController;
-use App\Http\Controllers\HomeController;
 
 // Admin Controllers
 use App\Http\Controllers\AuthController;
@@ -95,6 +95,14 @@ Route::middleware(['auth'])->group(function () {
     // 6. PENGATURAN
     Route::get('/admin/pengaturan', [SettingController::class, 'index']);
     Route::post('/admin/pengaturan', [SettingController::class, 'update']);
+
+    // PENGATURAN & HERO
+    Route::get('/admin/pengaturan', [App\Http\Controllers\Admin\SettingController::class, 'index']);
+    Route::post('/admin/pengaturan', [App\Http\Controllers\Admin\SettingController::class, 'update']);
+
+    // Route Baru Hero Slide
+    Route::post('/admin/pengaturan/hero', [App\Http\Controllers\Admin\SettingController::class, 'uploadHero']);
+    Route::delete('/admin/pengaturan/hero/{id}', [App\Http\Controllers\Admin\SettingController::class, 'deleteHero']);
 
     // 7. NOTIFIKASI REALTIME
     Route::get('/admin/api/notifications', [NotificationController::class, 'getNotifications']);

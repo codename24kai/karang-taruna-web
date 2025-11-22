@@ -39,7 +39,7 @@ class GalleryController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Galeri berhasil ditambahkan!');
-    } // <--- INI PENUTUP METHOD STORE YANG ILANG TADI
+    }
 
     // METHOD BARU UNTUK UPDATE
    public function update(Request $request, $id)

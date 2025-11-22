@@ -22,7 +22,7 @@ class NotificationController extends Controller
 
         foreach($pengaduan as $p) {
             $notifications[] = [
-                'id' => 'pengaduan-' . $p->id, // <--- TAMBAHAN PENTING: ID UNIK
+                'id' => 'pengaduan-' . $p->id, //
                 'type' => 'pengaduan',
                 'title' => 'Pengaduan Baru',
                 'desc' => 'Dari: ' . $p->nama,
@@ -35,7 +35,7 @@ class NotificationController extends Controller
 
         foreach($proposal as $p) {
             $notifications[] = [
-                'id' => 'proposal-' . $p->id, // <--- TAMBAHAN PENTING: ID UNIK
+                'id' => 'proposal-' . $p->id, //
                 'type' => 'proposal',
                 'title' => 'Proposal Masuk',
                 'desc' => 'Judul: ' . $p->judul,

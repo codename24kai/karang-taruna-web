@@ -1339,3 +1339,51 @@ body {
     background-color: #dc2626;
     transform: scale(1.1);
 }
+
+/* ======================================================== */
+/* === FIX FINAL: KONTRAS TEKS ADMIN (PENGADUAN & PROPOSAL) === */
+/* ======================================================== */
+
+/* 1. Paksa Teks Tabel Jadi Terang */
+[data-theme="dark"] .data-table td,
+[data-theme="dark"] .data-table th {
+    color: #e5e7eb !important; /* Abu Terang */
+    border-bottom-color: #374151 !important; /* Border Gelap */
+}
+
+[data-theme="dark"] .data-table strong {
+    color: #ffffff !important; /* Nama/Judul Putih Bersih */
+}
+
+[data-theme="dark"] .data-table small {
+    color: #9ca3af !important; /* Teks kecil abu-abu */
+}
+
+/* 2. Fix Teks di Modal Detail (Input Read-Only) */
+/* Masalah utama biasanya di input yang background-nya abu-abu */
+[data-theme="dark"] .form-input[readonly],
+[data-theme="dark"] textarea.form-input[readonly] {
+    background-color: #1f2937 !important; /* Background Gelap */
+    color: #f3f4f6 !important;            /* Teks Putih */
+    border-color: #4b5563 !important;     /* Border Abu */
+}
+
+/* 3. Fix Label Form & Judul Modal */
+[data-theme="dark"] .form-group label,
+[data-theme="dark"] .modal-header h2,
+[data-theme="dark"] h3.content-card-title,
+[data-theme="dark"] h4 {
+    color: #f3f4f6 !important; /* Putih */
+}
+
+/* 4. Fix Area "Bukti Lampiran" & "Dokumen Proposal" */
+/* Yang kotak biru muda itu lho */
+[data-theme="dark"] .form-group[style*="background: #eef2ff"],
+[data-theme="dark"] .form-group[style*="background: #f9fafb"] {
+    background-color: #111827 !important; /* Hitam Pekat */
+    border-color: #374151 !important;
+}
+
+[data-theme="dark"] .form-group div[style*="color: #3730a3"] { /* Judul "Dokumen Proposal" */
+    color: #93c5fd !important; /* Biru Muda Terang */
+}

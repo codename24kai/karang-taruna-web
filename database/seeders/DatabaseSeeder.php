@@ -17,9 +17,19 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // 1. Bikin Akun Admin
+    \App\Models\User::create([
+        'name' => 'Super Admin',
+        'username' => 'admin',
+        'password' => bcrypt('admin123'),
+        'role' => 'super_admin'
+    ]);
+
+    // 2. Panggil Seeder Lain
+    $this->call([
+        ArticleSeeder::class,
+        GallerySeeder::class,
+        // Tambahin seeder lain kalau ada
+    ]);
     }
 }

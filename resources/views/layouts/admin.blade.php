@@ -24,7 +24,7 @@
         .topbar-right {
             display: flex !important;
             align-items: center !important;
-            gap: 20px !important; /* Jarak antara Lonceng dan Profil */
+            gap: 20px !important;
         }
 
         /* Fix Posisi Wrapper Notifikasi */
@@ -35,11 +35,11 @@
             justify-content: center;
         }
 
-        /* Fix Dropdown Notifikasi (Melayang Benar) */
+        /* Fix Dropdown Notifikasi */
         .notification-dropdown {
             display: none;
             position: absolute !important;
-            top: 45px !important; /* Jarak dari lonceng */
+            top: 45px !important;
             right: -10px !important;
             width: 320px;
             background: white;
@@ -70,21 +70,12 @@
             border: 2px solid white;
         }
 
-        /* KHUSUS MOBILE (Layar Kecil) */
+        /* KHUSUS MOBILE */
         @media (max-width: 768px) {
             .notification-dropdown {
-                left: -10px !important; /* Geser dikit ke kiri biar pas */
-                width: 280px; /* Kecilin dikit biar muat */
+                left: -10px !important;
+                width: 280px;
             }
-
-            /* Kalau loncengnya mepet kanan, pake ini: */
-            /* right: -10px !important; */
-            /* left: auto !important; */
-        }
-
-        .notification-dropdown.show {
-            display: block !important;
-            animation: slideDown 0.2s ease-out;
         }
 
         /* Style Item Notif */
@@ -117,7 +108,6 @@
             <li class="sidebar-menu-item"><a href="{{ url('/admin/proposal') }}" class="sidebar-menu-link {{ request()->is('admin/proposal*') ? 'active' : '' }}"><svg class="sidebar-menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>Proposal</a></li>
             <li class="sidebar-menu-item"><a href="{{ url('/admin/galeri') }}" class="sidebar-menu-link {{ request()->is('admin/galeri*') ? 'active' : '' }}"><svg class="sidebar-menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>Galeri</a></li>
             <li class="sidebar-menu-item"><a href="{{ url('/admin/artikel') }}" class="sidebar-menu-link {{ request()->is('admin/artikel*') ? 'active' : '' }}"><svg class="sidebar-menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>Artikel</a></li>
-
             <li class="sidebar-menu-item"><a href="{{ url('/admin/pengguna') }}" class="sidebar-menu-link {{ request()->is('admin/pengguna*') ? 'active' : '' }}"><svg class="sidebar-menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Pengguna</a></li>
             <li class="sidebar-menu-item"><a href="{{ url('/admin/pengaturan') }}" class="sidebar-menu-link {{ request()->is('admin/pengaturan*') ? 'active' : '' }}"><svg class="sidebar-menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>Pengaturan</a></li>
         </ul>

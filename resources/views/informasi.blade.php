@@ -37,6 +37,7 @@
                         </div>
 
                         <div class="article-card__content">
+
                             <span class="article-card__category">{{ $article->category }}</span>
                             <h3 class="article-card__title">{{ $article->title }}</h3>
                             <p class="article-card__excerpt">{{ Str::limit($article->excerpt, 100) }}</p>

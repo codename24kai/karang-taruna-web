@@ -7,7 +7,7 @@
         <div class="container">
             <div class="hero">
                 <div class="hero__content">
-                    <h1 class="hero__title">Selamat Datang di Karang Taruna Sub-unit 006/013</h1>
+                    <h1 class="hero__title">Selamat Datang di Website Karang Taruna Sub-unit 006/013</h1>
                     <p class="hero__subtitle">Melayani masyarakat dengan integritas, transparansi, dan profesionalisme</p>
                     <div class="hero__actions">
                         <a href="{{ url('/pengaduan') }}" class="btn btn--primary">Laporkan Pengaduan</a>
@@ -56,19 +56,19 @@
                     <div class="service-card">
                         <div class="service-card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#A50104" stroke-width="2"><path d="m22 11-1.296-1.296a2.4 2.4 0 0 0-3.408 0L11 16"/><path d="M4 8a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2"/><circle cx="13" cy="7" r="1" fill="currentColor"/><rect x="8" y="2" width="14" height="14" rx="2"/></svg></div>
                         <h3 class="service-card__title">Galeri Kegiatan</h3>
-                        <p class="service-card__description">Dokumentasi kegiatan terkini.</p>
+                        <p class="service-card__description">Kumpulan dokumentasi visual dari setiap agenda yang telah terlaksana.</p>
                         <a href="#home-gallery" class="service-card__link">Lihat Foto →</a>
                     </div>
                     <div class="service-card">
                         <div class="service-card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#A50104" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg></div>
                         <h3 class="service-card__title">Pengaduan</h3>
-                        <p class="service-card__description">Sampaikan aspirasi Anda.</p>
+                        <p class="service-card__description">Layanan Aspirasi. Sampaikan masukan secara langsung</p>
                         <a href="{{ url('/pengaduan') }}" class="service-card__link">Buat Pengaduan →</a>
                     </div>
                     <div class="service-card">
                         <div class="service-card__icon"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#A50104" stroke-width="2"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></div>
                         <h3 class="service-card__title">Proposal</h3>
-                        <p class="service-card__description">Ajukan proposal kegiatan.</p>
+                        <p class="service-card__description">Pengajuan Event. Kirim rancangan kegiatanmu di sini.</p>
                         <a href="{{ url('/pengajuan') }}" class="service-card__link">Ajukan Proposal →</a>
                     </div>
                 </div>
@@ -151,138 +151,186 @@
     </div>
 
     <style>
-        /* Style Tombol Navigasi Hero */
-        .custom-nav {
-            position: absolute;
-            top: 50%; transform: translateY(-50%);
-            width: 40px; height: 40px;
-            background: rgba(0, 0, 0, 0.3);
-            border: none; border-radius: 50%;
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
-            transition: background 0.3s; z-index: 10; color: white;
-            font-size: 18px;
+    /* === FIX CSS CAROUSEL ANTI-DUPLIKAT === */
+    .hero__image {
+        width: 100%;
+        height: 400px; /* Tinggi Fix */
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        position: relative;
+    }
+
+    .hero-carousel {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    /* SLIDE ITEM */
+    .hero-slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0; /* Default sembunyi */
+        z-index: 1;
+        transition: opacity 0.8s ease-in-out; /* Transisi lebih cepat dikit biar tegas */
+    }
+
+    /* SLIDE AKTIF */
+    .hero-slide.active {
+        opacity: 1;
+        z-index: 2;
+    }
+
+    /* Caption di atas gambar */
+    .hero-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 40px 20px 20px;
+        background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        color: white;
+        font-weight: 600;
+        font-size: 18px;
+        text-align: center;
+        transform: translateY(20px);
+        opacity: 0;
+        transition: all 0.5s ease 0.3s; /* Delay dikit biar muncul belakangan */
+    }
+
+    .hero-slide.active .hero-caption {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    /* Navigasi */
+    .custom-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        background: rgba(0,0,0,0.3);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        transition: 0.3s;
+    }
+    .custom-nav:hover { background: #A50104; }
+    .prev-btn { left: 20px; }
+    .next-btn { right: 20px; }
+
+    /* Dots */
+    .carousel-dots {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+        z-index: 10;
+    }
+    .dot {
+        width: 10px;
+        height: 10px;
+        background: rgba(255,255,255,0.5);
+        border-radius: 50%;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .dot.active {
+        background: #FCBA04;
+        width: 30px;
+        border-radius: 10px;
+    }
+
+    /* RESPONSIVE HP */
+    @media (max-width: 768px) {
+        .hero__image { height: 250px; margin-top: 20px; }
+        .hero-caption { font-size: 14px; padding: 30px 15px 15px; }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.carousel-dots .dot');
+        const prevBtn = document.getElementById('heroPrev');
+        const nextBtn = document.getElementById('heroNext');
+
+        if (slides.length <= 1) {
+            // Kalau cuma 1 slide, sembunyikan navigasi
+            if(prevBtn) prevBtn.style.display = 'none';
+            if(nextBtn) nextBtn.style.display = 'none';
+            return;
         }
-        .custom-nav:hover { background: #A50104; }
-        .prev-btn { left: 20px; }
-        .next-btn { right: 20px; }
 
-        /* CSS Lightbox Home */
-        .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s; }
-        .lightbox.active { display: flex; opacity: 1; }
-        .lightbox__close { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; background: none; border: none; cursor: pointer; z-index: 10001; }
-        .lightbox__nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); color: white; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: 0.3s; }
-        .lightbox__nav:hover { background: #A50104; }
-        .lightbox__dot { width: 8px; height: 8px; background: rgba(255,255,255,0.3); border-radius: 50%; margin: 0 4px; cursor: pointer; display: inline-block; }
-        .lightbox__dot.active { background: #A50104; transform: scale(1.2); }
-    </style>
+        let currentSlide = 0;
+        let slideInterval;
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- 1. LOGIC HERO CAROUSEL ---
-            const heroSlides = document.querySelectorAll('.hero-slide');
-            const heroPrev = document.getElementById('heroPrev');
-            const heroNext = document.getElementById('heroNext');
+        // Fungsi Ganti Slide Utama
+        function goToSlide(index) {
+            // Hilangkan active dari slide sekarang
+            slides[currentSlide].classList.remove('active');
+            if(dots[currentSlide]) dots[currentSlide].classList.remove('active');
 
-            if(heroSlides.length > 0) {
-                let heroIndex = 0;
+            // Update index (Looping)
+            currentSlide = (index + slides.length) % slides.length;
 
-                function showHero(index) {
-                    heroSlides.forEach(s => s.classList.remove('active'));
-                    // Update dots juga kalau ada
-                    const dots = document.querySelectorAll('.carousel-dots .dot');
-                    dots.forEach(d => d.classList.remove('active'));
+            // Tambah active ke slide baru
+            slides[currentSlide].classList.add('active');
+            if(dots[currentSlide]) dots[currentSlide].classList.add('active');
+        }
 
-                    heroSlides[index].classList.add('active');
-                    if(dots[index]) dots[index].classList.add('active');
-                }
+        function nextSlide() {
+            goToSlide(currentSlide + 1);
+        }
 
-                function nextHero() {
-                    heroIndex = (heroIndex + 1) % heroSlides.length;
-                    showHero(heroIndex);
-                }
+        function prevSlide() {
+            goToSlide(currentSlide - 1);
+        }
 
-                function prevHero() {
-                    heroIndex = (heroIndex - 1 + heroSlides.length) % heroSlides.length;
-                    showHero(heroIndex);
-                }
+        // Auto Play
+        function startAuto() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 4000);
+        }
 
-                // Tombol
-                if(heroNext) heroNext.onclick = nextHero;
-                if(heroPrev) heroPrev.onclick = prevHero;
+        // Tombol Next
+        if (nextBtn) {
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                nextSlide();
+                startAuto(); // Reset timer biar gak bentrok
+            });
+        }
 
-                // Auto Play
-                setInterval(nextHero, 4000);
-            }
+        // Tombol Prev
+        if (prevBtn) {
+            prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                prevSlide();
+                startAuto();
+            });
+        }
 
-            // --- 2. LOGIC LIGHTBOX GALERI ---
-            const galleryData = @json($home_galleries);
-            let currentImages = [];
-            let currentIndex = 0;
-            let currentCaption = "";
+        // Klik Dot Manual (Fungsi global)
+        window.manualSlide = function(index) {
+            goToSlide(index);
+            startAuto();
+        }
 
-            const lightbox = document.getElementById('homeLightbox');
-            const lbImg = document.getElementById('lbImg');
-            const lbCaption = document.getElementById('lbCaption');
-            const lbPrev = document.getElementById('lbPrev');
-            const lbNext = document.getElementById('lbNext');
-            const lbDots = document.getElementById('lbDots');
-            const lbClose = document.getElementById('lbClose');
-
-            // Expose function to global scope for onclick
-            window.openHomeLightbox = function(index) {
-                const item = galleryData[index];
-                if (!item) return;
-
-                currentImages = JSON.parse(item.images);
-                currentCaption = item.caption;
-                currentIndex = 0;
-
-                if (currentImages.length > 0) {
-                    updateLightbox();
-                    lightbox.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                }
-            };
-
-            function updateLightbox() {
-                const baseUrl = "{{ asset('') }}";
-                lbImg.src = baseUrl + currentImages[currentIndex];
-
-                const counter = currentImages.length > 1 ? ` (${currentIndex + 1}/${currentImages.length})` : '';
-                lbCaption.innerText = currentCaption + counter;
-
-                if (currentImages.length > 1) {
-                    lbPrev.style.display = 'flex';
-                    lbNext.style.display = 'flex';
-                    lbDots.innerHTML = currentImages.map((_, idx) =>
-                        `<span class="lightbox__dot ${idx === currentIndex ? 'active' : ''}" onclick="window.goToImage(${idx})"></span>`
-                    ).join('');
-                } else {
-                    lbPrev.style.display = 'none';
-                    lbNext.style.display = 'none';
-                    lbDots.innerHTML = '';
-                }
-            }
-
-            window.goToImage = function(idx) {
-                currentIndex = idx;
-                updateLightbox();
-            };
-
-            lbClose.onclick = () => {
-                lightbox.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            };
-
-            lbNext.onclick = () => {
-                currentIndex = (currentIndex + 1) % currentImages.length;
-                updateLightbox();
-            };
-
-            lbPrev.onclick = () => {
-                currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-                updateLightbox();
-            };
-        });
-    </script>
+        // Jalankan
+        startAuto();
+    });
+</script>
 @endsection

@@ -171,6 +171,31 @@
                 if (e.key === 'ArrowLeft' && activeImages.length > 1) prevBtn.click();
             });
         });
+
+        // === LOGIC DARK MODE ===
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlEl = document.documentElement;
+
+        // 1. Cek Preferensi Tersimpan
+        if (localStorage.getItem('theme') === 'dark') {
+            htmlEl.setAttribute('data-theme', 'dark');
+            if(themeToggle) themeToggle.innerHTML = '☀️'; // Icon Matahari
+        }
+
+        // 2. Fungsi Toggle
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                if (htmlEl.getAttribute('data-theme') === 'dark') {
+                    htmlEl.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                    themeToggle.innerHTML = '🌙'; // Icon Bulan
+                } else {
+                    htmlEl.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    themeToggle.innerHTML = '☀️'; // Icon Matahari
+                }
+            });
+        }
     </script>
 
     <style>
@@ -180,5 +205,42 @@
         .lightbox__close { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; background: none; border: none; cursor: pointer; z-index: 10001; }
         .lightbox__nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 24px; display: flex; justify-content: center; align-items: center; transition: 0.3s; }
         .lightbox__nav:hover { background: #A50104; }
+
+        [data-theme="dark"] .gallery-item__caption {
+    background-color: #1f2937 !important; /* Abu Gelap */
+    color: #f3f4f6 !important; /* Teks Putih */
+    border-top: 1px solid #374151 !important; /* Garis pemisah tipis */
+}
+
+/* Pastikan teks judul di dalamnya putih */
+[data-theme="dark"] .gallery-item__caption strong {
+    color: #f3f4f6 !important;
+}
+
+/* Pastikan teks tanggal di dalamnya abu terang */
+[data-theme="dark"] .gallery-item__caption small {
+    color: #9ca3af !important;
+}
+
+/* Focus Visible */
+*:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* === FIX CAPTION GALERI GELAP === */
+[data-theme="dark"] .gallery-item__caption {
+    background-color: #1f2937 !important; /* Samain dengan kartu */
+    color: #f3f4f6 !important; /* Teks Putih */
+    border-top: 1px solid #374151; /* Garis pemisah tipis */
+}
+
+[data-theme="dark"] .gallery-item__caption strong {
+    color: #f3f4f6 !important;
+}
+
+[data-theme="dark"] .gallery-item__caption small {
+    color: #9ca3af !important; /* Abu terang dikit */
+}
     </style>
 @endsection

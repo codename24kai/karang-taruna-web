@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Article;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth; // Tambahin ini biar 'Auth' dikenal
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -37,12 +37,10 @@ class ArticleController extends Controller
             'title' => $request->title,
             'slug' => Str::slug($request->title) . '-' . time(),
             'category' => $request->category,
-            // PERBAIKAN 1: Pakai input('content')
             'content' => $request->input('content'),
             'excerpt' => Str::limit(strip_tags($request->input('content')), 150),
             'image' => $imagePath,
             'link' => $request->link,
-            // PERBAIKAN 2: Pakai Facade Auth
             'author' => Auth::user()->name,
             'published_at' => now(),
         ]);
@@ -59,7 +57,6 @@ class ArticleController extends Controller
             'category' => 'required',
             'content' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-
         ]);
 
         if ($request->hasFile('image')) {
@@ -76,8 +73,6 @@ class ArticleController extends Controller
 
         $article->title = $request->title;
         $article->category = $request->category;
-
-        // PERBAIKAN 3: Pakai input('content') di sini juga
         $article->content = $request->input('content');
         $article->excerpt = Str::limit(strip_tags($request->input('content')), 150);
 

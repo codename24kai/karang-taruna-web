@@ -1,0 +1,1327 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none; /* Hapus outline default browser */
+}
+
+:root {
+    --primary-color: #A50104;
+    --primary-hover: #8a0103;
+    --secondary-color: #FCBA04;
+    --dark-red: #7A0103;
+    --light-red: #FFE8E8;
+    --dark-gold: #D49A03;
+    --text-dark: #1a1a1a;
+    --text-gray: #6b7280;
+    --bg-light: #F3F4F6;
+    --white: #ffffff;
+    --border: #e5e7eb;
+
+    /* Shadow yang lebih halus & modern */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-glow: 0 0 15px rgba(165, 1, 4, 0.2); /* Efek glowing */
+
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Animasi smooth */
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.5;
+    overflow-x: hidden; /* Mencegah scroll samping */
+}
+
+/* === DARK MODE ADMIN === */
+[data-theme="dark"] {
+    /* Backgrounds */
+    --bg-light: #111827;      /* Background Utama Gelap */
+    --white: #1f2937;         /* Card Background Gelap */
+    --border: #374151;        /* Border Gelap */
+
+    /* Text */
+    --text-dark: #f9fafb;     /* Judul jadi Putih */
+    --text-gray: #9ca3af;     /* Teks biasa jadi Abu terang */
+
+    /* Shadow */
+    --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.5);
+}
+
+/* Penyesuaian Elemen Admin */
+[data-theme="dark"] body {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+}
+
+[data-theme="dark"] .sidebar {
+    /* Sidebar biasanya udah gelap, tapi kita bisa gelapin lagi atau biarin */
+    box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+}
+
+[data-theme="dark"] .topbar,
+[data-theme="dark"] .content-card,
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] .modal-box,
+[data-theme="dark"] .notification-dropdown,
+[data-theme="dark"] .notif-header,
+[data-theme="dark"] .notif-list {
+    background-color: var(--white);
+    border-color: var(--border);
+    color: var(--text-dark);
+}
+
+[data-theme="dark"] .topbar-user:hover,
+[data-theme="dark"] .notif-item:hover {
+    background-color: #374151;
+}
+
+[data-theme="dark"] .form-input {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: white;
+}
+
+[data-theme="dark"] .data-table th {
+    background-color: #374151;
+    color: #d1d5db;
+}
+
+[data-theme="dark"] .data-table td {
+    border-bottom-color: var(--border);
+    color: #e5e7eb;
+}
+
+[data-theme="dark"] .data-table tr:hover td {
+    background-color: #374151;
+}
+
+/* === 2. ANIMATIONS === */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+/* === 3. SIDEBAR === */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 280px;
+    height: 100vh;
+    background: linear-gradient(160deg, var(--primary-color) 0%, var(--dark-red) 100%);
+    color: var(--white);
+    padding: 24px;
+    overflow-y: auto;
+    transition: var(--transition);
+    z-index: 1000;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+}
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-logo-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.sidebar-logo-icon img{
+    width: 48px;
+    height: 48px;
+}
+
+.sidebar-logo:hover .sidebar-logo-icon {
+    transform: rotate(10deg) scale(1.1); /* Logo goyang dikit pas di hover */
+}
+
+.sidebar-logo-text h2 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.sidebar-logo-text p {
+    font-size: 12px;
+    opacity: 0.8;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.sidebar-menu { list-style: none; }
+.sidebar-menu-item { margin-bottom: 8px; }
+
+.sidebar-menu-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    border-radius: 10px;
+    transition: var(--transition);
+    font-size: 14px;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover Effect Sidebar */
+.sidebar-menu-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+    padding-left: 20px; /* Geser dikit ke kanan */
+}
+
+/* Active State Sidebar */
+.sidebar-menu-link.active {
+    background: var(--white);
+    color: var(--primary-color);
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.sidebar-menu-link.active .sidebar-menu-icon {
+    transform: scale(1.1);
+}
+
+.sidebar-menu-icon {
+    width: 20px;
+    height: 20px;
+    transition: var(--transition);
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* === 4. MAIN CONTENT === */
+.main-content {
+    margin-left: 280px;
+    padding: 32px; /* Lebih lega */
+    min-height: 100vh;
+    animation: fadeIn 0.6s ease-out; /* Efek muncul */
+}
+
+/* Topbar */
+.topbar {
+    background: var(--white);
+    padding: 20px 28px;
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+    position: sticky;
+    top: 20px;
+    z-index: 900;
+    backdrop-filter: blur(10px); /* Efek kaca */
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.topbar:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.topbar-left h1 {
+    font-size: 24px;
+    color: var(--text-dark);
+    font-weight: 700;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.topbar-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 12px 6px 6px;
+    background: var(--bg-light);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: var(--transition);
+    border: 1px solid transparent;
+}
+
+.topbar-user:hover {
+    background: var(--white);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--border);
+    transform: translateY(-1px);
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.user-role{
+    font-weight: 700;
+}
+
+/* === 5. STATS CARDS (Interactive) === */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    background: var(--white);
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+    border: 1px solid transparent;
+    cursor: default;
+}
+
+/* Efek Hover Card: Naik dikit + Shadow makin dalem */
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(0,0,0,0.05);
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    transition: var(--transition);
+}
+
+/* Warna garis atas */
+.stat-card.primary::before { background: var(--primary-color); }
+.stat-card.secondary::before { background: var(--secondary-color); }
+.stat-card.success::before { background: #10b981; }
+.stat-card.warning::before { background: #f59e0b; }
+
+/* Icon Card */
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.stat-card:hover .stat-icon {
+    transform: scale(1.1) rotate(5deg); /* Icon muter dikit */
+}
+
+/* Warna background icon */
+.stat-card.primary .stat-icon { background: rgba(165, 1, 4, 0.1); color: var(--primary-color); }
+.stat-card.secondary .stat-icon { background: rgba(252, 186, 4, 0.1); color: var(--dark-gold); }
+.stat-card.success .stat-icon { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+.stat-card.warning .stat-icon { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+
+.stat-number { font-size: 32px; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; letter-spacing: -1px; }
+.stat-label { font-size: 14px; color: var(--text-gray); font-weight: 500; }
+
+/* === 6. CONTENT CARDS & TABLES === */
+.content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.content-card {
+    background: var(--white);
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    border: 1px solid var(--border);
+}
+
+.content-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.content-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.content-card-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+/* Table Styling */
+.data-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+
+.data-table th {
+    padding: 16px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-gray);
+    background: var(--bg-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.data-table th:first-child { border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
+.data-table th:last-child { border-top-right-radius: 8px; border-bottom-right-radius: 8px; }
+
+.data-table td {
+    padding: 16px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+}
+
+/* Interactive Rows */
+.data-table tr:hover td {
+    background: var(--light-red); /* Highlight warna merah muda pas di hover */
+    cursor: pointer;
+}
+
+.data-table tr:last-child td { border-bottom: none; }
+
+/* Badges */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.status-badge:hover { transform: scale(1.05); }
+
+.status-badge.pending { background: #fff7ed; color: #c2410c; border: 1px solid #ffedd5; }
+.status-badge.process { background: #eff6ff; color: #1d4ed8; border: 1px solid #dbeafe; }
+.status-badge.done { background: #ecfdf5; color: #047857; border: 1px solid #d1fae5; }
+.status-badge.rejected { background: #fef2f2; color: #b91c1c; border: 1px solid #fee2e2; }
+
+/* === 7. BUTTONS (Clicky & Interactive) === */
+.btn, .btn-primary, .btn-secondary, .btn-action {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efek Klik (Scale Down) */
+.btn:active, .btn-primary:active, .btn-secondary:active {
+    transform: scale(0.95);
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: var(--white);
+    box-shadow: 0 4px 6px rgba(165, 1, 4, 0.2);
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    box-shadow: 0 6px 12px rgba(165, 1, 4, 0.3);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: var(--white);
+    color: var(--text-dark);
+    border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+    background: var(--bg-light);
+    border-color: var(--text-gray);
+}
+
+.btn-action {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+.btn-edit { background: #f59e0b; color: white; }
+.btn-edit:hover { background: #d97706; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3); }
+
+.btn-delete { background: #ef4444; color: white; }
+.btn-delete:hover { background: #dc2626; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3); }
+
+/* === 8. FORMS (Glowing Focus) === */
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: var(--text-dark); }
+
+.form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    background: var(--bg-light);
+    transition: var(--transition);
+}
+
+.form-input:focus {
+    background: var(--white);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(165, 1, 4, 0.1); /* Glowing effect */
+}
+
+/* === 9. MODAL (Glassmorphism) === */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Gelap transparan */
+    backdrop-filter: blur(5px); /* Blur background */
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-box {
+    background: var(--white);
+    padding: 32px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-xl);
+    animation: slideUpModal 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-origin: bottom;
+
+    /* Default: Auto (Biar fleksibel) */
+    width: auto;
+    height: auto;
+}
+
+#crudModal .modal-box {
+    width: 800px;        /* Lebar mantap */
+    max-width: 95%;      /* Aman di HP */
+    height: 85vh;        /* Tinggi fix biar footer diem */
+    max-height: 85vh;
+
+    display: flex;       /* Flexbox buat ngatur footer */
+    flex-direction: column;
+}
+
+/* Tambahin style ini biar form-nya yang bisa discroll, bukan seluruh modal */
+#crudModal .modal-box form {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* Biar footer tombol selalu di bawah */
+.modal-footer {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    flex-shrink: 0; /* Footer gak boleh gepeng */
+}
+
+@keyframes slideUpModal {
+    from { transform: translateY(40px) scale(0.9); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* === CSS UNTUK AKTIVITAS TERKINI === */
+
+.activity-list {
+    list-style: none; /* Hilangin bullet points */
+    margin: 0;
+    padding: 0;
+}
+
+.activity-item {
+    display: flex;
+    gap: 16px; /* Jarak icon & teks */
+    padding: 16px 8px; /* Padding atas-bawah & kiri-kanan */
+    border-bottom: 1px solid var(--border);
+    transition: var(--transition);
+
+    /* Animasi masuk satu per satu */
+    animation: fadeIn 0.5s ease-out;
+    animation-fill-mode: both;
+}
+
+/* Delay animasi biar gak barengan */
+.activity-item:nth-child(1) { animation-delay: 0.1s; }
+.activity-item:nth-child(2) { animation-delay: 0.2s; }
+.activity-item:nth-child(3) { animation-delay: 0.3s; }
+.activity-item:nth-child(4) { animation-delay: 0.4s; }
+
+.activity-item:last-child {
+    border-bottom: none; /* Item terakhir gak ada garis bawah */
+}
+
+/* === INTERAKTIF HOVER === */
+.activity-item:hover {
+    background: var(--bg-light); /* Warna background ganti pas hover */
+    transform: translateX(4px); /* Geser dikit ke kanan */
+    cursor: pointer;
+}
+
+.activity-item:hover .activity-icon {
+    transform: scale(1.15) rotate(10deg); /* Icon jadi gede & muter dikit */
+}
+
+/* === STYLING ICON === */
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Jadi bulat */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0; /* Biar icon gak gepeng */
+    transition: var(--transition);
+}
+
+.activity-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2;
+}
+
+/* Warna icon (sesuai dashboard) */
+.activity-icon.pengaduan {
+    background: var(--light-red); /* Merah muda */
+    color: var(--primary-color);  /* Merah tua */
+}
+
+/* Gue pake 'mediasi' (sesuai HTML lo) dan 'galeri' (nama baru) */
+.activity-icon.mediasi,
+.activity-icon.galeri {
+    background: rgba(252, 186, 4, 0.1); /* Kuning muda */
+    color: var(--dark-gold);           /* Kuning tua */
+}
+
+.activity-icon.proposal {
+    background: rgba(16, 185, 129, 0.1); /* Hijau muda */
+    color: #10b981;                    /* Hijau */
+}
+
+/* === STYLING TEKS === */
+.activity-content {
+    flex: 1; /* Ambil sisa tempat */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.activity-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 2px;
+}
+
+.activity-desc {
+    font-size: 14px;
+    color: var(--text-gray);
+    line-height: 1.4;
+}
+
+.activity-time {
+    font-size: 12px;
+    color: var(--text-gray);
+    opacity: 0.8;
+    margin-top: 4px;
+}
+
+/* === STYLING POPUP LOGOUT === */
+
+/* Kita reuse .modal-overlay dari kode sebelumnya,
+   tapi kita tambahin styling khusus buat box logout */
+
+.logout-box {
+    width: 420px !important; /* Paksa jadi kecil */
+    max-width: 90%;
+    height: auto !important; /* Tinggi ngikutin isi teks */
+    display: block;          /* Gak perlu flex column */
+    text-align: center;      /* Teks di tengah */
+    padding: 40px 30px;
+}
+
+.logout-icon {
+    width: 80px;
+    height: 80px;
+    background: #fee2e2;
+    color: #ef4444;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px auto;
+    animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.logout-box h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: var(--text-dark);
+}
+
+.logout-box p {
+    color: var(--text-gray);
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+.logout-footer {
+    justify-content: center;
+    gap: 16px;
+    margin-top: 0;
+    border-top: none; /* Hapus garis pemisah di modal kecil */
+    padding-top: 0;
+}
+
+.logout-footer button {
+    min-width: 120px;
+}
+
+/* === STYLING KHUSUS PROFILE CARD (Updated) === */
+
+/* 1. Container Box */
+#profileModal .modal-box {
+    width: 380px !important; /* Ukuran pas, gak kegedean */
+    max-width: 90%;
+    height: auto !important; /* Tinggi ngikutin isi */
+    padding: 0; /* Reset padding biar header mentok ke pinggir */
+    overflow: hidden; /* Biar sudut header ikut melengkung */
+    display: block;
+}
+
+/* 2. Header Merah */
+.profile-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--dark-red));
+    padding: 40px 20px 30px;
+    text-align: center;
+    color: var(--white);
+}
+
+/* 3. Avatar */
+.profile-avatar-lg {
+    width: 80px;
+    height: 80px;
+    background: var(--white);
+    color: var(--primary-color);
+    border-radius: 50%;
+    font-size: 28px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px auto;
+    border: 4px solid rgba(255,255,255,0.3); /* Efek border transparan */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.profile-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.profile-role {
+    margin-top: 5px;
+    font-size: 12px;
+    opacity: 0.9;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: rgba(0,0,0,0.2);
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+/* 4. Isi Data */
+.profile-details {
+    padding: 25px;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 14px;
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-item .label {
+    color: var(--text-gray);
+    font-weight: 500;
+}
+
+.detail-item .value {
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+/* 5. Footer Tombol */
+.profile-footer {
+    background-color: #f8fafc;
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between; /* Tombol Kiri Kanan */
+    align-items: center;
+    border-top: 1px solid var(--border);
+    margin-top: 0;
+}
+
+.profile-footer button {
+    font-size: 13px;
+    padding: 8px 16px;
+}
+
+/* === FILE UPLOAD STYLE (Mirip Pengaduan) === */
+.file-upload-container {
+    position: relative;
+    margin-top: 5px;
+}
+
+.file-upload-input {
+    display: none; /* Sembunyiin input aslinya */
+}
+
+.file-upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    border: 2px dashed #cbd5e1; /* Garis putus-putus */
+    border-radius: 12px;
+    background-color: #f8fafc;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.file-upload-label:hover {
+    border-color: var(--primary-color);
+    background-color: #fff1f2; /* Merah muda dikit pas hover */
+}
+
+.upload-icon {
+    color: #94a3b8;
+    margin-bottom: 10px;
+    transition: color 0.3s;
+}
+
+.file-upload-label:hover .upload-icon {
+    color: var(--primary-color);
+}
+
+.upload-text {
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* Preview Image di Form */
+.file-preview-box {
+    margin-top: 15px;
+    padding: 10px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    display: none; /* Hidden by default */
+    align-items: center;
+    gap: 15px;
+}
+
+.preview-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    background: #eee;
+}
+
+.preview-info {
+    flex: 1;
+    font-size: 13px;
+    color: #334155;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-remove-file {
+    color: #ef4444;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 5px;
+}
+
+/* === STYLING TOMBOL "LIHAT SEMUA" === */
+.view-all-link {
+    display: inline-flex; /* Ganti dari block ke inline-flex */
+    width: auto;          /* Hapus width: 100% */
+    min-width: 140px;     /* Kasih lebar minimal biar enak dilihat */
+    justify-content: center;
+    align-items: center;
+    padding: 8px 16px;    /* Padding lebih santai */
+    margin-top: 16px;
+
+    /* Styling Tombol */
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color); /* Garis tepi warna tema */
+    border-radius: 12px; /* Sudut membulat */
+
+    /* Font Styling */
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+
+    /* Animasi */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* === TAMBAHAN UNTUK PREVIEW MULTIPLE IMAGE === */
+.file-preview-box {
+    margin-top: 10px;
+    padding: 8px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: calc(50% - 10px); /* Biar 2 kolom di dalam form */
+    box-sizing: border-box;
+    position: relative;
+}
+
+.preview-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+    background: #eee;
+}
+
+.btn-remove-file {
+    margin-left: auto;
+    color: #ef4444;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0 5px;
+}
+
+.btn-remove-file:hover {
+    color: #b91c1c;
+    background: #fee2e2;
+    border-radius: 4px;
+}
+
+/* Pastikan container preview bisa wrap kalau banyak */
+[id^="preview_container_"] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+}
+
+/* Efek Hover: Jadi Solid & Naik Dikit */
+.view-all-link:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-color: var(--primary-color);
+    transform: translateY(-3px); /* Efek melayang */
+    box-shadow: 0 5px 15px rgba(165, 1, 4, 0.3); /* Bayangan glowing */
+    text-decoration: none;
+}
+
+/* Efek Klik */
+.view-all-link:active {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(165, 1, 4, 0.3);
+}
+
+/* === NOTIFIKASI (FIXED LAYOUT & INTERAKTIF) === */
+
+.notification-wrapper {
+    position: relative; /* PENTING: Patokan posisi absolute anak-anaknya */
+    display: inline-block;
+}
+
+.topbar-notifications {
+    position: relative;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.topbar-notifications:hover {
+    background-color: #f3f4f6; /* Efek hover di lonceng */
+}
+
+/* Badge Merah */
+.notification-badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background-color: #ef4444;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 5px;
+    border-radius: 10px;
+    border: 2px solid white;
+    min-width: 18px;
+    text-align: center;
+}
+
+/* Dropdown Melayang */
+.notification-dropdown {
+    display: none; /* Default sembunyi */
+    position: absolute; /* Melayang */
+    top: 120%; /* Jarak dari lonceng */
+    right: 0; /* Rata kanan dengan lonceng */
+    width: 320px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    z-index: 9999; /* Pastikan paling atas */
+    overflow: hidden;
+    transform-origin: top right;
+}
+
+/* Class ini ditambahkan JS saat diklik */
+.notification-dropdown.show {
+    display: block;
+    animation: popOver 0.2s cubic-bezier(0.16, 1, 0.3, 1); /* Animasi membal dikit */
+}
+
+/* Header Notif */
+.notif-header {
+    padding: 15px;
+    border-bottom: 1px solid #f3f4f6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+}
+
+.notif-header h4 { margin: 0; font-size: 14px; font-weight: 700; color: #1f2937; }
+.notif-header span { font-size: 12px; color: #A50104; cursor: pointer; font-weight: 500; }
+.notif-header span:hover { text-decoration: underline; }
+
+/* List Item */
+.notif-list {
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+.notif-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 15px;
+    border-bottom: 1px solid #f9fafb;
+    cursor: pointer;
+    transition: background 0.2s;
+    align-items: start;
+}
+
+.notif-item:hover {
+    background-color: #fdf2f2; /* Merah muda tipis pas hover */
+}
+
+.notif-item.unread {
+    background-color: #ffffff;
+}
+
+/* Indikator Belum Dibaca (Titik Merah) */
+.notif-item.unread::before {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    background-color: #A50104;
+    border-radius: 50%;
+    position: absolute;
+    left: 6px;
+    top: 20px;
+}
+
+.notif-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.notif-text { flex: 1; }
+.notif-text p { margin: 0 0 2px 0; font-size: 13px; font-weight: 600; color: #1f2937; }
+.notif-text span { font-size: 11px; color: #6b7280; line-height: 1.4; display: block; }
+
+/* Animasi Muncul */
+@keyframes popOver {
+    from { opacity: 0; transform: scale(0.95) translateY(-10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* === DASHBOARD CAROUSEL (ROLLING) === */
+.dashboard-slider { min-height: 350px; display: flex; flex-direction: column; }
+.slider-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+
+.slider-controls { display: flex; gap: 8px; }
+.dot { width: 10px; height: 10px; background: #e2e8f0; border-radius: 50%; cursor: pointer; transition: all 0.3s; }
+.dot.active { background: var(--primary-color); width: 20px; border-radius: 10px; }
+
+.slide-item { display: none; flex: 1; animation: fadeIn 0.5s; }
+.slide-item.active { display: block; }
+
+.gallery-preview-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.gallery-preview-item img { width: 100%; height: 100px; object-fit: cover; border-radius: 8px; }
+.article-preview-item { display: flex; gap: 10px; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #f1f5f9; }
+.article-preview-img { width: 60px; height: 60px; border-radius: 6px; object-fit: cover; }
+
+@keyframes slideInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Animasi Icon Meletup */
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    80% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+/* === 10. RESPONSIVE (Mobile Friendly) === */
+.mobile-menu-toggle {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(165, 1, 4, 0.4);
+    cursor: pointer;
+    z-index: 1100;
+    transition: var(--transition);
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-menu-toggle:active { transform: scale(0.9); }
+
+@media (max-width: 1024px) {
+    .content-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); box-shadow: none; }
+    .sidebar.active { transform: translateX(0); box-shadow: 100px 0 0 rgba(0,0,0,0.2); } /* Shadow overlay semu */
+
+    .main-content { margin-left: 0; padding: 20px; }
+
+    .mobile-menu-toggle { display: flex; }
+
+    .topbar { flex-direction: column; gap: 16px; align-items: flex-start; }
+    .topbar-right { width: 100%; justify-content: space-between; }
+
+    .stats-grid { grid-template-columns: 1fr; }
+
+    .modal-box { margin: 20px; width: auto; }
+}
+
+/* === CUSTOM UPLOAD BOX (GAYA DRAG & DROP) === */
+
+.upload-box-wrapper {
+    position: relative;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.upload-box {
+    border: 2px dashed #cbd5e1 !important; /* Garis putus-putus */
+    background-color: #f8fafc;
+    border-radius: 12px;
+    min-height: 150px; /* Tinggi minimal */
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.upload-box:hover {
+    border-color: #A50104 !important; /* Merah pas dihover */
+    background-color: #fff1f2;
+}
+
+.upload-box-icon {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Pastikan icon SVG warnanya bener */
+.upload-box-icon svg {
+    width: 40px;
+    height: 40px;
+    stroke: #94a3b8; /* Warna abu */
+    transition: stroke 0.3s;
+}
+
+.upload-box:hover .upload-box-icon svg {
+    stroke: #A50104; /* Merah pas hover */
+}
+
+.upload-box p {
+    margin: 0;
+    font-size: 14px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+/* INI KUNCINYA: Sembunyikan input asli tapi tetep bisa diklik */
+.upload-input-hidden {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0 !important; /* Wajib 0 biar gak kelihatan */
+    cursor: pointer;
+    z-index: 10;
+}
+
+/* Container Preview */
+.preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.preview-item {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* === TOMBOL HAPUS PREVIEW (Admin) === */
+.preview-item {
+    position: relative; /* Wajib biar tombolnya nempel di pojok */
+}
+
+.btn-remove-preview {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background-color: #ef4444;
+    color: white;
+    border: 2px solid white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+    z-index: 10;
+}
+
+.btn-remove-preview:hover {
+    background-color: #dc2626;
+    transform: scale(1.1);
+}

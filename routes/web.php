@@ -20,6 +20,8 @@ use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\UserController; // Ditambahin use biar konsisten
 use App\Http\Controllers\Admin\SettingController; // Ditambahin use biar konsisten
 
+use Illuminate\Support\Facades\Artisan;
+
 /*
 |--------------------------------------------------------------------------
 | PUBLIC ROUTES (Guest)
@@ -109,28 +111,25 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Route Rahasia buat Setup di Vercel
-Route::get('/setup-project', function () {
+// Route Rahasia buat Reset Cache (Nuke)
+Route::get('/nuke-cache', function() {
     try {
-        // 1. Link Storage (biar gambar kebaca)
-        \Illuminate\Support\Facades\Artisan::call('storage:link');
-        echo 'Storage Linked... <br>';
-
-        // 2. Migrasi Database + Seeding
-        \Illuminate\Support\Facades\Artisan::call('migrate:fresh --seed --force');
-        echo 'Database Migrated & Seeded! <br>';
-
-        // 3. Clear Cache
-        \Illuminate\Support\Facades\Artisan::call('config:clear');
-        \Illuminate\Support\Facades\Artisan::call('cache:clear');
-        echo 'Cache Cleared! <br>';
-
-        return 'DONE! Website siap digunakan.';
+        Artisan::call('optimize:clear'); // Panggil langsung 'Artisan'
+        return '💥 Cache berhasil diledakkan! Sekarang coba buka /setup-project lagi.';
     } catch (\Exception $e) {
-        return 'Error: ' . $e->getMessage();
+        return 'Gagal clear cache: ' . $e->getMessage();
     }
 });
 
-Route::get('/nuke-cache', function() {
-    \Illuminate\Support\Facades\Artisan::call('optimize:clear');
-    return 'Cache berhasil diledakkan! Coba akses /setup-project lagi.';
+// Route Rahasia buat Setup Awal (Migrasi)
+Route::get('/setup-project', function () {
+    try {
+        Artisan::call('storage:link');
+        Artisan::call('migrate:fresh --seed --force');
+        Artisan::call('optimize:clear');
+
+        return '✅ DONE! Database sudah siap digunakan. Silakan buka halaman utama.';
+    } catch (\Exception $e) {
+        return '❌ Error: ' . $e->getMessage();
+    }
 });

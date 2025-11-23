@@ -108,28 +108,10 @@ Route::middleware(['auth'])->group(function () {
 
     // 7. NOTIFIKASI REALTIME
     Route::get('/admin/api/notifications', [NotificationController::class, 'getNotifications']);
-});
 
-// Route Rahasia buat Setup di Vercel
-// Route Rahasia buat Reset Cache (Nuke)
-Route::get('/nuke-cache', function() {
-    try {
-        Artisan::call('optimize:clear'); // Panggil langsung 'Artisan'
-        return '💥 Cache berhasil diledakkan! Sekarang coba buka /setup-project lagi.';
-    } catch (\Exception $e) {
-        return 'Gagal clear cache: ' . $e->getMessage();
-    }
-});
-
-// Route Rahasia buat Setup Awal (Migrasi)
-Route::get('/setup-project', function () {
-    try {
-        Artisan::call('storage:link');
-        Artisan::call('migrate:fresh --seed --force');
+    // Cuma admin yang login yang bisa clear cache
+    Route::get('/admin/nuke-cache', function() {
         Artisan::call('optimize:clear');
-
-        return '✅ DONE! Database sudah siap digunakan. Silakan buka halaman utama.';
-    } catch (\Exception $e) {
-        return '❌ Error: ' . $e->getMessage();
-    }
+        return redirect()->back()->with('success', 'Cache berhasil diledakkan! 💥');
+    });
 });

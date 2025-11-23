@@ -29,6 +29,7 @@ class ArticleController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $filename = time() . '_' . $file->getClientOriginalName();
+            // $path = $request->file('image')->store('uploads/artikel', 'public');
             $file->move(public_path('uploads/artikel'), $filename);
             $imagePath = 'uploads/artikel/' . $filename;
         }

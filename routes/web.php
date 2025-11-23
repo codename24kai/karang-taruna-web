@@ -129,3 +129,8 @@ Route::get('/setup-project', function () {
         return 'Error: ' . $e->getMessage();
     }
 });
+
+Route::get('/nuke-cache', function() {
+    \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+    return 'Cache berhasil diledakkan! Coba akses /setup-project lagi.';
+});

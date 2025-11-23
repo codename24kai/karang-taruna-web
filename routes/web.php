@@ -107,3 +107,25 @@ Route::middleware(['auth'])->group(function () {
     // 7. NOTIFIKASI REALTIME
     Route::get('/admin/api/notifications', [NotificationController::class, 'getNotifications']);
 });
+
+// Route Rahasia buat Setup di Vercel
+Route::get('/setup-project', function () {
+    try {
+        // 1. Link Storage (biar gambar kebaca)
+        \Illuminate\Support\Facades\Artisan::call('storage:link');
+        echo 'Storage Linked... <br>';
+
+        // 2. Migrasi Database + Seeding
+        \Illuminate\Support\Facades\Artisan::call('migrate:fresh --seed --force');
+        echo 'Database Migrated & Seeded! <br>';
+
+        // 3. Clear Cache
+        \Illuminate\Support\Facades\Artisan::call('config:clear');
+        \Illuminate\Support\Facades\Artisan::call('cache:clear');
+        echo 'Cache Cleared! <br>';
+
+        return 'DONE! Website siap digunakan.';
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
+});

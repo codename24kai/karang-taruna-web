@@ -34,10 +34,6 @@
                 <input type="email" name="site_email" class="form-input" value="{{ $settings['site_email'] ?? '' }}">
             </div>
             <div class="form-group">
-                <label>Nomor Telepon / WA</label>
-                <input type="text" name="site_phone" class="form-input" value="{{ $settings['site_phone'] ?? '' }}">
-            </div>
-            <div class="form-group">
                 <label>Username Instagram</label>
                 <input type="text" name="instagram" class="form-input" value="{{ $settings['instagram'] ?? '' }}">
             </div>

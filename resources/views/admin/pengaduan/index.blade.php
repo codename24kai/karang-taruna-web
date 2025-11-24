@@ -139,7 +139,7 @@
                     <div style="display: flex; align-items: center; gap: 10px;">
                         <span style="font-size: 20px;">📷</span>
                         <div>
-                            <div style="font-weight: 600; font-size: 13px; color: #3730a3;">Bukti Lampiran</div>
+                            <div style="font-weight: 600; font-size: 13px; color: #02010f;">Bukti Lampiran</div>
                             <div style="font-size: 11px; color: #6b7280;">Klik tombol untuk melihat</div>
                         </div>
                     </div>

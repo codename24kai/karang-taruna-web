@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Setting;
-use App\Models\HeroSlide; // <--- Tambah Model Baru
+use App\Models\HeroSlide;
 use Illuminate\Support\Facades\File;
+
 
 class SettingController extends Controller
 {
@@ -73,4 +74,38 @@ class SettingController extends Controller
 
         return redirect()->back()->with('success', 'Slide berhasil dihapus.');
     }
+
+    // === FITUR BARU: UPDATE HERO (Caption) ===
+    public function updateHero(Request $request, $id)
+    {
+        $slide = HeroSlide::findOrFail($id);
+
+        $request->validate([
+            'caption' => 'nullable|string|max:255'
+        ]);
+
+        $slide->update([
+            'caption' => $request->caption
+        ]);
+
+        return redirect()->back()->with('success', 'Caption slide berhasil diperbarui!');
+    }
+    // === HAPUS SEMUA SLIDE ===
+    public function deleteAllHero()
+    {
+        $slides = HeroSlide::all();
+
+        foreach($slides as $slide) {
+            // Perhatikan: Kita pakai nama lengkap '\Illuminate\Support\Facades\File'
+            // Ini biar Laravel gak bingung nyari 'File' kemana-mana.
+            if(\Illuminate\Support\Facades\File::exists(public_path($slide->image))) {
+                \Illuminate\Support\Facades\File::delete(public_path($slide->image));
+            }
+        }
+
+        HeroSlide::truncate();
+
+        return redirect()->back()->with('success', 'Semua slide berhasil dihapus bersih!');
+    }
 }
+

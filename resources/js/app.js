@@ -368,8 +368,7 @@ function initModal() {
     });
 }
 
-// === HERO CAROUSEL LOGIC (UPDATED) ===
-// === HERO CAROUSEL LOGIC (Pastikan kode ini ada) ===
+// === HERO CAROUSEL LOGIC ===
 function initHeroCarousel() {
     const slides = document.querySelectorAll('.hero-slide');
     const dots = document.querySelectorAll('.carousel-dots .dot');
@@ -458,62 +457,6 @@ function generateArticles() {
         image: `Article ${i + 1}`
     }));
 }
-
-// ==================== Brief Articles (Homepage) ====================
-
-/**
- * Renders a brief list of articles for the homepage.
- */
-// function initBriefArticles() {
-//     const grid = document.getElementById('briefArticlesGrid');
-//     if (!grid) return;
-
-//     if (STATE.articles.length === 0) {
-//         STATE.articles = generateArticles();
-//     }
-
-//     const briefArticleCount = 3;
-//     const show = STATE.articles.slice(0, briefArticleCount);
-
-//     if (!show.length) {
-//         grid.innerHTML = '<p class="admin-empty">Belum ada informasi terbaru.</p>';
-//         return;
-//     }
-//     // Kita tambahin onclick="openArticleDetail(${a.id})" di sini 👇
-//     grid.innerHTML = show.map(a => `
-//         <article class="article-card clickable" onclick="openArticleDetail(${a.id})">
-//             <div class="article-card__image">${a.image}</div>
-//             <div class="article-card__content">
-//                 <span class="article-card__category">${a.category}</span>
-//                 <h3 class="article-card__title">${a.title}</h3>
-//                 <p class="article-card__excerpt">${a.excerpt}</p>
-//                 <time class="article-card__date">${formatDate(a.date)}</time>
-//             </div>
-//         </article>`).join('');
-// }
-
-// ==================== Articles (Full Page) ====================
-
-/**
- * Renders the full, filterable list of articles for the info page.
- */
-// function initArticles() {
-//     const grid = document.getElementById('articlesGrid');
-//     if (!grid) return; // Hanya jalan di informasi.html
-
-//     // Buat data artikel JIKA BELUM DIBUAT oleh initBriefArticles
-//     if (STATE.articles.length === 0) {
-//         STATE.articles = generateArticles();
-//     }
-
-//     // Set filter awal ke semua artikel
-//     STATE.filteredArticles = [...STATE.articles];
-
-//     // Render artikel dan pasang event listener
-//     renderArticles(); // Fungsi ini akan merender ke 'articlesGrid'
-//     document.getElementById('searchInput').addEventListener('input', filterArticles);
-//     document.getElementById('categoryFilter').addEventListener('change', filterArticles);
-// }
 
 
 function renderArticles() {

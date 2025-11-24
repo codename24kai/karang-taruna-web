@@ -411,7 +411,7 @@ a {
 
 .hero__subtitle {
     font-size: var(--font-size-lg);
-    color: var(--color-gray-600);
+    color: var(--color-gray-900);
     margin-bottom: var(--spacing-xl);
 }
 
@@ -462,7 +462,7 @@ a {
 
 .stats__label {
     font-size: var(--font-size-sm);
-    color: var(--color-gray-600);
+    color: var(--color-gray-900);
 }
 
 /* ==================== Services ==================== */
@@ -507,7 +507,7 @@ a {
 }
 
 .service-card__description {
-    color: var(--color-gray-600);
+    color: var(--color-gray-900);
     margin-bottom: var(--spacing-lg);
 }
 
@@ -774,12 +774,7 @@ a {
     cursor: not-allowed;
 }
 
-/* ==================== Mediasi Content (Sudah tidak terpakai, bisa dihapus) ==================== */
-.mediasi-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-3xl);
-}
+
 /* ... (Style mediasi-info* lainnya bisa dihapus jika mau) ... */
 
 
@@ -1327,47 +1322,88 @@ a {
     transform: scale(1.3);
 }
 
-/* ... (SISA KODE LAMA TETAP SAMA) ... */
-
 @keyframes zoomIn {
     from { transform: scale(0.9); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
 
 
-/* ==================== Footer ==================== */
+/* =========================================
+   === FOOTER STYLE (HIGH CONTRAST) ===
+   ========================================= */
+
 .footer {
-    background-color: var(--color-gray-900);
-    color: var(--color-gray-300);
-    padding: var(--spacing-3xl) 0 var(--spacing-xl);
-    margin-top: var(--spacing-3xl);
+    background-color: var(--color-gray-800); /* Hitam Pekat (Warna Kontras) */
+    color: var(--color-gray-300); /* Teks Abu Terang (Biar gak sakit mata) */
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+    margin-top: auto;
+}
+
+.footer__title {
+    color: var(--color-white); /* Judul Putih Bersih */
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    position: relative;
+    display: inline-block;
+}
+
+/* Garis kecil di bawah judul biar manis */
+.footer__title::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 3px;
+    background-color: var(--color-primary); /* Warna Kuning/Emas */
+    margin-top: 8px;
+    border-radius: 2px;
+}
+
+.footer__text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+/* Link di footer (Instagram/Email) */
+.footer__text a {
+    color: var(--color-white); /* Warna Kuning Emas */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.footer__text a:hover {
+    color: var(--color-white);
+    text-decoration: underline;
 }
 
 .footer__content {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-3xl);
-    margin-bottom: var(--spacing-xl);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
 }
 
-.footer__title {
-    color: var(--color-white);
-    font-size: var(--font-size-lg);
-    font-weight: 600;
-    margin-bottom: var(--spacing-md);
-}
-
-.footer__text {
-    line-height: 1.8;
-    color: var(--color-gray-400);
-}
-
+/* Bagian Hak Cipta di paling bawah */
 .footer__bottom {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-primary); /* Garis pemisah tipis */
     text-align: center;
-    padding-top: var(--spacing-xl);
-    border-top: 1px solid var(--color-gray-700);
+    font-size: 0.875rem;
     color: var(--color-gray-500);
 }
+
+/* Fix Dark Mode: Pastikan footer tetap gelap & elegan */
+[data-theme="dark"] .footer__title,
+[data-theme="dark"] .footer,
+[data-theme="dark"] .footer__text a {
+    background-color: #1f2937 !important; /* Sedikit lebih gelap dari body */
+    border-top-color: var(--color-primary);
+    color: var(--color-gray-900);
+}
+
 
 /* ==================== Toast Notification ==================== */
 .toast {
@@ -2287,4 +2323,92 @@ a {
     .modal__overlay {
         animation: none;
     }
+}
+
+/* ======================================================== */
+/* === FIX FINAL: POPUP SUKSES DARK MODE (PENGADUAN) === */
+/* ======================================================== */
+
+/* 1. Background Modal jadi Gelap */
+[data-theme="dark"] .modal-box[style*="background: white"] {
+    background-color: #1f2937 !important; /* Abu Gelap */
+    color: #f3f4f6 !important;            /* Teks Putih */
+    border: 1px solid #374151;            /* Border halus */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* 2. Judul & Deskripsi */
+[data-theme="dark"] .modal-box h2 {
+    color: #f3f4f6 !important;
+}
+[data-theme="dark"] .modal-box p {
+    color: #9ca3af !important; /* Abu Terang */
+}
+
+/* 3. Icon Ceklis (Ubah dari Ijo Muda ke Ijo Gelap Elegan) */
+[data-theme="dark"] .modal-box div[style*="background: #ecfdf5"] {
+    background-color: #064e3b !important; /* Hijau Tua */
+    color: #34d399 !important;            /* Centang Hijau Neon */
+}
+
+/* 4. Kotak Nomor Tiket (Yang tadinya abu-abu muda) */
+[data-theme="dark"] .modal-box div[style*="background: #f3f4f6"] {
+    background-color: #111827 !important; /* Hitam Pekat */
+    border-color: #374151 !important;     /* Border Abu */
+}
+
+/* 5. Label "Nomor Tiket Anda" */
+[data-theme="dark"] .modal-box div[style*="background: #f3f4f6"] p {
+    color: #9ca3af !important;
+}
+
+/* 6. Angka Tiket (Tadinya Merah Gelap, kita terangin dikit biar kebaca) */
+[data-theme="dark"] .modal-box h3#ticketDisplay {
+    color: #f87171 !important; /* Merah Salmon Terang */
+}
+
+/* 7. Tombol-tombol di dalam modal */
+[data-theme="dark"] .modal-box .btn--secondary {
+    background-color: #374151;
+    color: white;
+    border: 1px solid #4b5563;
+}
+[data-theme="dark"] .modal-box .btn--secondary:hover {
+    background-color: #4b5563;
+}
+
+/* searchbox informasi dark mode */
+
+[data-theme="dark"] .search-box__input {
+    background-color: var(--color-white);
+    color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .search-box ::placeholder{
+    color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .search-box svg{
+    color: #f1f5f9 !important;
+}
+
+/* kategori filter informasi dark mode */
+
+[data-theme="dark"] .filter-group__select{
+    color: #f1f5f9 !important;
+}
+
+/* dark mode modal box */
+
+[data-theme="dark"] .modal-box h3{
+    color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .template-item{
+    background-color: #1f2937 !important;
+    color: #f1f5f9 !important;
+}
+[data-theme="dark"] .template-item:hover{
+    background-color: #4b5563 !important;
+    color: #f1f5f9 !important;
 }

@@ -39,7 +39,7 @@ body {
 /* === DARK MODE ADMIN === */
 [data-theme="dark"] {
     /* Backgrounds */
-    --bg-light: #111827;      /* Background Utama Gelap */
+    --bg-light: #1a1a1a;      /* Background Utama Gelap */
     --white: #1f2937;         /* Card Background Gelap */
     --border: #374151;        /* Border Gelap */
 
@@ -65,10 +65,7 @@ body {
 [data-theme="dark"] .topbar,
 [data-theme="dark"] .content-card,
 [data-theme="dark"] .stat-card,
-[data-theme="dark"] .modal-box,
-[data-theme="dark"] .notification-dropdown,
-[data-theme="dark"] .notif-header,
-[data-theme="dark"] .notif-list {
+[data-theme="dark"] .modal-box {
     background-color: var(--white);
     border-color: var(--border);
     color: var(--text-dark);
@@ -165,6 +162,10 @@ body {
 
 .sidebar-logo:hover .sidebar-logo-icon {
     transform: rotate(10deg) scale(1.1); /* Logo goyang dikit pas di hover */
+}
+
+.sidebar-logo-text{
+    color: #ffffff;
 }
 
 .sidebar-logo-text h2 {
@@ -1386,4 +1387,94 @@ body {
 
 [data-theme="dark"] .form-group div[style*="color: #3730a3"] { /* Judul "Dokumen Proposal" */
     color: #93c5fd !important; /* Biru Muda Terang */
+}
+
+/* halaman pengaturan dark mode */
+
+[data-theme="dark"] form[style*="background: #f9fafb"] {
+    background-color: #1f2937 !important; /* Abu Gelap */
+    border-color: #374151 !important;     /* Border lebih gelap */
+    color: #f3f4f6 !important;            /* Teks Putih */
+}
+
+/* 2. Kartu Slide Hero (Yang tadinya putih) */
+/* Target div yang punya style background white */
+[data-theme="dark"] div[style*="background: white"] {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+}
+
+/* 3. Empty State (Kotak "Belum ada slide") */
+[data-theme="dark"] div[style*="background: #f9fafb"] {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+    color: #9ca3af !important;
+}
+
+/* 4. Teks Judul/Caption di dalam Kartu Slide */
+/* Yang tadinya hitam (#333) jadi putih */
+[data-theme="dark"] p[style*="color: #333"] {
+    color: #f3f4f6 !important;
+}
+
+/* 5. Teks Kecil (Small/Hint) */
+[data-theme="dark"] small[style*="color: #888"] {
+    color: #9ca3af !important; /* Abu Terang */
+}
+
+[data-theme="dark"] .content-card form input{
+    background-color: #4b5563 !important;
+    color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] form label{
+    color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] form div{
+    color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .content-card .upload-box{
+    background-color: #4b5563 !important;
+    color: #f1f5f9 !important;
+}
+
+/* ========================================== */
+/* === TOMBOL HAPUS SEMUA (DUAL THEME) === */
+/* ========================================== */
+
+/* 1. Tampilan Default (Light Mode) */
+.btn-delete-all {
+    background-color: #fee2e2; /* Merah muda lembut */
+    color: #dc2626;            /* Teks Merah */
+    border: 1px solid #fca5a5; /* Border merah tipis */
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-delete-all:hover {
+    background-color: #fca5a5;
+    color: #991b1b;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(220, 38, 38, 0.1);
+}
+
+/* 2. Tampilan Dark Mode (Kontras Gelap) */
+[data-theme="dark"] .btn-delete-all {
+    background-color: #450a0a !important; /* Merah Maroon Gelap */
+    color: #fca5a5 !important;            /* Teks Merah Terang */
+    border-color: #7f1d1d !important;     /* Border Merah Tua */
+}
+
+[data-theme="dark"] .btn-delete-all:hover {
+    background-color: #7f1d1d !important;
+    color: #ffffff !important;            /* Teks Putih pas hover */
 }

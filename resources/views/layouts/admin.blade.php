@@ -84,10 +84,34 @@
         .notif-item { display: flex; gap: 15px; padding: 15px; border-bottom: 1px solid #f5f5f5; cursor: pointer; transition: 0.2s; align-items: start; }
         .notif-item:hover { background-color: #f9fafb; }
         .notif-icon { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
-        .notif-text p { margin: 0 0 5px 0; font-size: 13px; font-weight: 600; color: #333; }
+        .notif-text p { margin: 0 0 5px 0; font-size: 13px; font-weight: 600;}
         .notif-text span { font-size: 12px; color: #666; line-height: 1.4; display: block; }
 
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* === FIX DARURAT: DARK MODE NOTIFIKASI === */
+
+        /* Target Judul Notifikasi */
+        html[data-theme="dark"] .notif-text p {
+            color: #ffffff !important; /* Putih Bersih */
+        }
+
+        /* Target Deskripsi Notifikasi */
+
+        /* Target Waktu / Info Tambahan (Jaga-jaga) */
+       html[data-theme="dark"] .notif-header{
+            color: #f3f4f6 !important;
+            background-color: #1f2937 !important;
+        }
+       html[data-theme="dark"] .notif-list{
+       background-color: #1f2937 !important;
+       }
+       html[data-theme="dark"] .notif-list div{
+            color: #f3f4f6 !important;
+        }
+        html[data-theme="dark"] .notif-list div:hover{
+            background-color: #4b5563;
+        }
     </style>
 </head>
 <body>

@@ -101,9 +101,12 @@ Route::middleware(['auth'])->group(function () {
     // PENGATURAN & HERO
     Route::get('/admin/pengaturan', [App\Http\Controllers\Admin\SettingController::class, 'index']);
     Route::post('/admin/pengaturan', [App\Http\Controllers\Admin\SettingController::class, 'update']);
+    Route::put('/admin/pengaturan/hero/{id}', [App\Http\Controllers\Admin\SettingController::class, 'updateHero']);
+    Route::delete('/admin/pengaturan/hero/{id}', [App\Http\Controllers\Admin\SettingController::class, 'deleteHero']);
 
     // Route Baru Hero Slide
     Route::post('/admin/pengaturan/hero', [App\Http\Controllers\Admin\SettingController::class, 'uploadHero']);
+    Route::delete('/admin/pengaturan/hero-actions/delete-all', [App\Http\Controllers\Admin\SettingController::class, 'deleteAllHero']);
     Route::delete('/admin/pengaturan/hero/{id}', [App\Http\Controllers\Admin\SettingController::class, 'deleteHero']);
 
     // 7. NOTIFIKASI REALTIME
